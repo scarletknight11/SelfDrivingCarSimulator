@@ -20,7 +20,7 @@ public class Wander : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+    agent = GetComponent<NavMeshAgent>();
 	animator = GetComponent<Animator>();
     }
 
