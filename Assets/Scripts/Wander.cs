@@ -27,18 +27,19 @@ public class Wander : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+	var stopped = agent.remainingDistance < agent.stoppingDistance || agent.isStopped;
+	animator.SetBool("H_WALK", !stopped);
         if (wait <= 0 && walk <= 0)
 	{
-	    Debug.Log("set");
+	    //Debug.Log("set");
 	    agent.isStopped = false;
-	    animator.SetBool("H_WALK", true);
 	    agent.SetDestination(RandomPoint());
 	    walk = Random.Range(walkMin, walkMax);
 	    wait = Random.Range(waitMin, waitMax);
 	}
 	else if (walk > 0)
 	{
-	    Debug.Log("walk " + walk.ToString());
+	    //Debug.Log("walk " + walk.ToString());
 	    walk -= Time.deltaTime;
 	    if (agent.remainingDistance < agent.stoppingDistance)
 	    {
@@ -48,13 +49,12 @@ public class Wander : MonoBehaviour {
 	}
 	else if (!agent.isStopped)
 	{
-	    Debug.Log("walk timeout");
+	    //Debug.Log("walk timeout");
 	    agent.isStopped = true;
 	}
 	else if (wait > 0)
 	{
-	    animator.SetBool("H_WALK", false);
-	    Debug.Log("wait " + wait.ToString());
+	    //Debug.Log("wait " + wait.ToString());
 	    wait -= Time.deltaTime;
 	}
     }
