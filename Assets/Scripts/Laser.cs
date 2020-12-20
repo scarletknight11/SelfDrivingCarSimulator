@@ -50,7 +50,7 @@ public class Laser : MonoBehaviour {
 
     public float getDistance()
     {
-        return distance;
+        return distance/distanceLaser;
     }
 
 }

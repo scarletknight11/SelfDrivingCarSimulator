@@ -120,6 +120,7 @@ public class NeuralNetwork {
         //Update neurons from the Input layer to the output layer
         for (int layer = 0; layer < neurons.Count; layer++)
         {
+
             float[][] weightsLayer = weights[layer];
             int nextLayer = layer + 1;
             List<float> neuronsLayer = neurons[layer];

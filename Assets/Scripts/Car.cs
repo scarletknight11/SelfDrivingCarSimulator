@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,7 +52,47 @@ public class Car : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        //change Camera():
+        changeCamera();
 
+    }
+
+    public DNA getDNA()
+    {
+        return dna;
+    }
+
+    public void changeCamera()
+    {
+        CarControllerAI controller = GameObject.Find("CarController").GetComponent<CarControllerAI>();
+        List<GameObject> cars = controller.getCars();
+    if(cars.Count == 2)
+        {
+            controller.winner = cars[0].GetComponent<Car>().getDNA();
+            controller.secondWinner = cars[1].GetComponent<Car>().getDNA();
+        }
+    if (cars.Count == 1)
+        {
+            //if not first winner then second car is the winner
+            if(!controller.winner.Equals(cars[0].GetComponent<Car>().getDNA()))
+            {
+                DNA inter = controller.secondWinner;
+                controller.secondWinner = controller.winner;
+                controller.winner = inter;
+            }
+            cars.Remove(gameObject);
+            controller.newPopulation(true);
+            Destroy(gameObject);
+        }
+    //else
+    //    {
+    //        int rand = Random.Range(0,(int)cars.Count);
+    //        if (cars[rand] == gameObject)
+    //        {
+    //            changeCamera();
+    //        } else
+    //        {
+
+    //        }
+    //    }
     }
 }
