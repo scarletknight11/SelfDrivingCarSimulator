@@ -9,6 +9,7 @@ public class Agent : MonoBehaviour
     public float radius;
     public float mass;
     public float perceptionRadius;
+    public float stopCoef = 2f;
 
     public AgentManager agents;
     public bool arrived
@@ -51,23 +52,30 @@ public class Agent : MonoBehaviour
     private void Update()
     {
 	RotateToTarget();
+	if (path.Count == 0)
+	{
+	    arrived = true;
+	    rb.velocity = Vector3.zero;
+	}
         if (path.Count > 1 && Vector3.Distance(transform.position, path[0]) < 1.1f)
         {
             path.RemoveAt(0);
-        } else if (path.Count == 1 && Vector3.Distance(transform.position, path[0]) < nma.stoppingDistance)
+        } else if (path.Count == 1 && Vector3.Distance(transform.position, path[0])
+		   < nma.stoppingDistance)
         {
             path.RemoveAt(0);
-
-            if (path.Count == 0)
-            {
-		rb.velocity = Vector3.zero;
-                arrived = true;
-            }
         }
+	else if (path.Count == 1 && Vector3.Distance(transform.position, path[0])
+		 < perceivedNeighbors.Count * stopCoef)
+	{
+	    //Debug.Log(path.Count);
+	    path.RemoveAt(0);
+	    SetDestination(transform.position);
+	}
 
         #region Visualization
 
-        if (true)
+        if (false)
         {
             if (path.Count > 0)
             {
@@ -102,11 +110,10 @@ public class Agent : MonoBehaviour
     
     public void SetDestination(Vector3 destination)
     {
-	if (Vector3.Distance(destination, transform.position) < nma.stoppingDistance)
+	if (Vector3.Distance(destination, nma.destination) < nma.stoppingDistance)
 	{
 	    return;
 	}
-	arrived = false;
         nma.enabled = true;
         var nmPath = new NavMeshPath();
         nma.CalculatePath(destination, nmPath);
@@ -114,6 +121,7 @@ public class Agent : MonoBehaviour
         //path = new List<Vector3>() { destination };
         //nma.SetDestination(destination);
         nma.enabled = false;
+	arrived = false;
     }
 
     public Vector3 GetVelocity()
@@ -177,6 +185,7 @@ public class Agent : MonoBehaviour
 
             //updates position of agent force distances
             agentForce += Parameters.A * Mathf.Exp(overlap / Parameters.B) * dir;
+	    agentForce += -neighbor.transform.right * 30f;
 	    // TODO sliding force
             //agentForce += Parameters.k * (overlap > 0f ? 1 : 0) * dir;
 
@@ -204,7 +213,7 @@ public class Agent : MonoBehaviour
         return wallForce;
     }
 
-    public void SnapYToNavMesh()
+    public void SnapToNavMesh()
     {
 	// snap the agent to the nav mesh
 	NavMeshHit hit;
@@ -214,7 +223,7 @@ public class Agent : MonoBehaviour
 	    0.2f,
 	    NavMesh.AllAreas
 	);
-	if (Mathf.Abs(hit.position.y - transform.position.y) > 0.001f)
+	if (Vector3.Distance(hit.position, transform.position) > 0.001f)
 	{
 	    NavMesh.SamplePosition(
 		transform.position,
@@ -223,11 +232,12 @@ public class Agent : MonoBehaviour
 		NavMesh.AllAreas
 	    );
 
-	    transform.position = new Vector3(
+	    transform.position = hit.position;
+	    /*new Vector3(
 		transform.position.x,
 		hit.position.y,
 		transform.position.z
-	    );
+		);*/
 	}
 	
     }
@@ -255,7 +265,7 @@ public class Agent : MonoBehaviour
     
     public void ApplyForce()
     {
-	SnapYToNavMesh();
+	SnapToNavMesh();
 	// actually apply force
         var force = ComputeForce();
         //force.y = 0;

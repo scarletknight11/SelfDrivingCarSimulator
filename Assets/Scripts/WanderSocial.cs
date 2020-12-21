@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WanderSocial : MonoBehaviour {
-
+public class WanderSocial : MonoBehaviour, TrafficLight.Waiter
+{
     public Transform points;
     public float waitMin = 5;
     public float waitMax = 2;
@@ -18,6 +18,9 @@ public class WanderSocial : MonoBehaviour {
     private float wait = 0;
     private float walk = 0;
     private int goal = -1;
+
+    private Vector3 destination = Vector3.positiveInfinity;
+    private bool waitingAtLight = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,22 +38,27 @@ public class WanderSocial : MonoBehaviour {
         if (wait <= 0 && walk <= 0)
 	{
 	    //Debug.Log("set");
-	    agent.SetDestination(RandomPoint());
+	    destination = RandomPoint();
+	    agent.SetDestination(destination);
+	    
 	    walk = Random.Range(walkMin, walkMax);
 	    wait = Random.Range(waitMin, waitMax);
 	}
 	else if (walk > 0)
 	{
 	    //Debug.Log("walk " + walk.ToString());
-	    walk -= Time.deltaTime;
-	    if (agent.arrived)
+	    if (!waitingAtLight)
 	    {
-		walk = 0;
+		walk -= Time.deltaTime;
+		if (agent.arrived)
+		{
+		    walk = 0;
+		}
 	    }
 	}
 	else if (!agent.arrived)
 	{
-	    //Debug.Log("walk timeout");
+	    //Debug.Log(name + " walk timeout");
 	    agent.SetDestination(transform.position);
 	}
 	else if (wait > 0)
@@ -75,5 +83,23 @@ public class WanderSocial : MonoBehaviour {
 	    NavMesh.AllAreas
 	);
 	return hit.position;
+    }
+
+    public void Wait()
+    {
+	//Debug.Log("wait " + name);
+	agent.SetDestination(transform.position);
+	
+	waitingAtLight = true;
+    }
+
+    public void Unwait()
+    {
+	if (waitingAtLight)
+	{
+	    //Debug.Log("unwait " + name + " " + destination.ToString());
+	    waitingAtLight = false;
+	    agent.SetDestination(destination);
+	}
     }
 }

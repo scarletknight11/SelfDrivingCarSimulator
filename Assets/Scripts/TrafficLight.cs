@@ -6,20 +6,34 @@ public class TrafficLight : MonoBehaviour
 {
     public class Capture : MonoBehaviour
     {
-	public TrafficLight light;
+	public TrafficLight trafficLight;
 	public int grp;
 	
-	void Setup()
+	void Start()
 	{
 	    GetComponent<Collider>().isTrigger = true;
 	}
 	
 	void OnTriggerEnter(Collider other)
 	{
+	    //Debug.Log("enter " + other.gameObject.name);
 	    var w = other.GetComponent<Waiter>();
 	    if (w != null)
 	    {
-		light.EnterGroup(grp, w);
+		var angle = Vector3.SignedAngle(
+		    transform.forward,
+		    other.transform.forward,
+		    Vector3.up
+		);
+		// exiting the intersection
+		if (Mathf.Abs(angle) > 100)
+		{
+		    //Debug.Log("actually an exit " + angle.ToString());
+		    return;
+		}
+		//Debug.Log(angle);
+		//Debug.Log(other.gameObject.name + " wait signal");
+		trafficLight.EnterGroup(grp, w);
 	    }
 	}
 
@@ -28,7 +42,7 @@ public class TrafficLight : MonoBehaviour
 	    var w = other.GetComponent<Waiter>();
 	    if (w != null)
 	    {
-		light.ExitGroup(grp, w);
+		trafficLight.ExitGroup(grp, w);
 	    }
 	}
     }
@@ -51,10 +65,10 @@ public class TrafficLight : MonoBehaviour
     private float time = 0;
     private int inactiveGroup = 1; // really 2
 
-    void Setup()
+    void Start()
     {
-	SetupGroup(1, group1Capture);
-	SetupGroup(2, group2Capture);
+	SetupGroup(0, group1Capture);
+	SetupGroup(1, group2Capture);
     }
 
     void SetupGroup(int grp, GameObject obj)
@@ -67,7 +81,7 @@ public class TrafficLight : MonoBehaviour
 		Debug.LogError(name + " / " + child.name + " is missing a collider!");
 	    }
 	    var capt = child.AddComponent<Capture>();
-	    capt.light = this;
+	    capt.trafficLight = this;
 	    capt.grp = grp;
 	}
     }
@@ -96,12 +110,15 @@ public class TrafficLight : MonoBehaviour
     {
 	if (time <= 0)
 	{
-	    inactiveGroup = (inactiveGroup + 1) % 2;
+	    //Debug.Log("switch to " + inactiveGroup);
 	    foreach(var waiter in groups[inactiveGroup])
 	    {
 		waiter.Unwait();
+		
 	    }
+	    groups[inactiveGroup].Clear();
 	    time = inactiveGroup == 0? time1 : time2;
+	    inactiveGroup = (inactiveGroup + 1) % 2;
 	}
 	else
 	{

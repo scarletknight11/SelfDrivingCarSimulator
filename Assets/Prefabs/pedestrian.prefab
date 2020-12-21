@@ -467,6 +467,8 @@ GameObject:
   - component: {fileID: 5803446144617477161}
   - component: {fileID: 5803446144626960601}
   - component: {fileID: 1063237197075871851}
+  - component: {fileID: 6838381281172728807}
+  - component: {fileID: 5800956277372514209}
   m_Layer: 0
   m_Name: pedestrian
   m_TagString: Untagged
@@ -548,6 +550,36 @@ MonoBehaviour:
   waitMax: 2
   walkMin: 10
   walkMax: 20
+--- !u!54 &6838381281172728807
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5803446144626873299}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &5800956277372514209
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5803446144626873299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5803446144626874825
 GameObject:
   m_ObjectHideFlags: 0

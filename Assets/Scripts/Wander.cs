@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Wander : MonoBehaviour {
+public class Wander : MonoBehaviour, TrafficLight.Waiter {
 
     public Transform points;
     public float waitMin = 5;
@@ -16,6 +16,7 @@ public class Wander : MonoBehaviour {
     private float wait = 0;
     private float walk = 0;
     private int goal = -1;
+    private bool waitingAtLight = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,16 +41,19 @@ public class Wander : MonoBehaviour {
 	else if (walk > 0)
 	{
 	    //Debug.Log("walk " + walk.ToString());
-	    walk -= Time.deltaTime;
-	    if (agent.remainingDistance < agent.stoppingDistance)
+	    if (!waitingAtLight)
 	    {
-		agent.isStopped = true;
-		walk = 0;
+		walk -= Time.deltaTime;
+		if (agent.remainingDistance < agent.stoppingDistance)
+		{
+		    agent.isStopped = true;
+		    walk = 0;
+		}
 	    }
 	}
 	else if (!agent.isStopped)
 	{
-	    //Debug.Log("walk timeout");
+	    //Debug.Log(name + " walk timeout");
 	    agent.isStopped = true;
 	}
 	else if (wait > 0)
@@ -75,5 +79,22 @@ public class Wander : MonoBehaviour {
 	);
 	return hit.position;
 
+    }
+
+    public void Wait()
+    {
+	//Debug.Log("wait " + name);
+	agent.isStopped = true;
+	waitingAtLight = true;
+    }
+
+    public void Unwait()
+    {
+	if (waitingAtLight)
+	{
+	    //Debug.Log("unwait " + name);
+	    agent.isStopped = false;
+	    waitingAtLight = false;
+	}
     }
 }
