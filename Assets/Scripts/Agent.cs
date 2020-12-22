@@ -11,7 +11,6 @@ public class Agent : MonoBehaviour
     public float perceptionRadius;
     public float stopCoef = 2f;
 
-    public AgentManager agents;
     public bool arrived
     {
 	private set

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Wander : MonoBehaviour, TrafficLight.Waiter {
+public class Wander : MonoBehaviour, TrafficLight.Waiter, GameObjectSink.Sinkable
+{
 
-    public Transform points;
     public float waitMin = 5;
     public float waitMax = 2;
     public float walkMin = 10;
@@ -34,7 +34,7 @@ public class Wander : MonoBehaviour, TrafficLight.Waiter {
 	{
 	    //Debug.Log("set");
 	    agent.isStopped = false;
-	    agent.SetDestination(RandomPoint());
+	    agent.SetDestination(WanderPoints.RandomPoint(goal));
 	    walk = Random.Range(walkMin, walkMax);
 	    wait = Random.Range(waitMin, waitMax);
 	}
@@ -63,24 +63,6 @@ public class Wander : MonoBehaviour, TrafficLight.Waiter {
 	}
     }
 
-    Vector3 RandomPoint()
-    {
-	var newGoal = Random.Range(0, points.childCount);
-	if (goal == newGoal) return RandomPoint();
-	goal = newGoal;
-	var point = points.GetChild(newGoal).position;
-	// find closest point on nav mesh within 1u
-	NavMeshHit hit;
-	var found = NavMesh.SamplePosition(
-	    point,
-	    out hit,
-	    1f,
-	    NavMesh.AllAreas
-	);
-	return hit.position;
-
-    }
-
     public void Wait()
     {
 	//Debug.Log("wait " + name);
@@ -97,4 +79,10 @@ public class Wander : MonoBehaviour, TrafficLight.Waiter {
 	    waitingAtLight = false;
 	}
     }
+
+    public void Sink()
+    {
+	Destroy(this.gameObject);
+    }
+
 }

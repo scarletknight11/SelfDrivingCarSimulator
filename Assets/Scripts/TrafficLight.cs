@@ -55,6 +55,8 @@ public class TrafficLight : MonoBehaviour
     
     public GameObject group1Capture;
     public GameObject group2Capture;
+    public LampController lamp1;
+    public LampController lamp2;
     public float time1;
     public float time2;
 
@@ -119,6 +121,8 @@ public class TrafficLight : MonoBehaviour
 	    groups[inactiveGroup].Clear();
 	    time = inactiveGroup == 0? time1 : time2;
 	    inactiveGroup = (inactiveGroup + 1) % 2;
+	    lamp1.green = inactiveGroup == 1;
+	    lamp2.green = inactiveGroup == 0;
 	}
 	else
 	{

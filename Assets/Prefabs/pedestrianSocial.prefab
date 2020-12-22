@@ -340,7 +340,7 @@ MonoBehaviour:
   radius: 1
   mass: 10
   perceptionRadius: 5
-  agents: {fileID: 0}
+  stopCoef: 2
 --- !u!114 &5489197548825319558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,11 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a921518f7a0a7caf8fc67d600c98ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: {fileID: 0}
   waitMin: 5
   waitMax: 2
-  walkMin: 10
-  walkMax: 20
+  walkMin: 10000
+  walkMax: 10000
 --- !u!1 &1885569887212938856
 GameObject:
   m_ObjectHideFlags: 0
