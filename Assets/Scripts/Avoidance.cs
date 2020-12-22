@@ -45,7 +45,7 @@ public class Avoidance : MonoBehaviour {
         if(Vector3.Distance(targetPoint, transform.position) < toleranceRadius) { 
             return; 
         }
-        currentSpeed = movementSpeed * Time.deltaTime;
+        //currentSpeed = movementSpeed * Time.deltaTime;
         //Rotate the agent towards its target direction
         targetRotation = Quaternion.LookRotation(direction); 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
@@ -58,7 +58,9 @@ public class Avoidance : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition); 
             if (Physics.Raycast(ray, out mouseHit, 100.0f)) { 
-                targetPoint = mouseHit.point; 
+                targetPoint = mouseHit.point;
+                currentSpeed = movementSpeed * Time.deltaTime;
+                 
             }
         } 
     }
@@ -78,7 +80,7 @@ public class Avoidance : MonoBehaviour {
                                 //Get the new directional vector by adding force to agent's current forward vector 
             direction = transform.forward + hitNormal * force;
         }
-      }
+    }
 
 
 }
