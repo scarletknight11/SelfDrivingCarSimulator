@@ -80,6 +80,11 @@ public class Wander : MonoBehaviour, TrafficLight.Waiter, GameObjectSink.Sinkabl
 	}
     }
 
+    public bool IsWaitCollider(Collider c)
+    {
+	return true;
+    }
+
     public void Sink()
     {
 	Destroy(this.gameObject);

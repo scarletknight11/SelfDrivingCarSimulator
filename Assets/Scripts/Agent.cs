@@ -25,6 +25,7 @@ public class Agent : MonoBehaviour
 
     private List<Vector3> path;
     private NavMeshAgent nma;
+    private NavMeshObstacle nmo;
     private Rigidbody rb;
 
     private HashSet<GameObject> perceivedNeighbors = new HashSet<GameObject>();
@@ -40,6 +41,7 @@ public class Agent : MonoBehaviour
 	}
         path = new List<Vector3>();
         nma = GetComponent<NavMeshAgent>();
+	nmo = GetComponent<NavMeshObstacle>();
         rb = GetComponent<Rigidbody>();
 
 	radius = nma.radius;
@@ -184,7 +186,8 @@ public class Agent : MonoBehaviour
 
             //updates position of agent force distances
             agentForce += Parameters.A * Mathf.Exp(overlap / Parameters.B) * dir;
-	    agentForce += -neighbor.transform.right * 30f;
+	    var tangent = new Vector3(dir.z, dir.y, -dir.x);
+	    agentForce += tangent * 30;
 	    // TODO sliding force
             //agentForce += Parameters.k * (overlap > 0f ? 1 : 0) * dir;
 

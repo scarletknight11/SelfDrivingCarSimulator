@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WanderSocial : MonoBehaviour, TrafficLight.Waiter, GameObjectSink.Sinkable
+public class WanderSocial : MonoBehaviour,
+    TrafficLight.Waiter, GameObjectSink.Sinkable, Counter.SpecificCollider
 {
     public float waitMin = 5;
     public float waitMax = 2;
     public float walkMin = 10;
     public float walkMax = 20;
+    public Collider waitCollider;
 
     private Agent agent;
     private NavMeshAgent nma;
@@ -83,6 +85,16 @@ public class WanderSocial : MonoBehaviour, TrafficLight.Waiter, GameObjectSink.S
 	    waitingAtLight = false;
 	    agent.SetDestination(destination);
 	}
+    }
+
+    public bool IsWaitCollider(Collider c)
+    {
+	return c == waitCollider;
+    }
+
+    public bool IsCounterCollider(Collider c)
+    {
+	return c == waitCollider;
     }
 
     public void Sink()

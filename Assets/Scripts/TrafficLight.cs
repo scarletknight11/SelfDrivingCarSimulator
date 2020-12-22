@@ -18,7 +18,7 @@ public class TrafficLight : MonoBehaviour
 	{
 	    //Debug.Log("enter " + other.gameObject.name);
 	    var w = other.GetComponent<Waiter>();
-	    if (w != null)
+	    if (w != null && w.IsWaitCollider(other))
 	    {
 		var angle = Vector3.SignedAngle(
 		    transform.forward,
@@ -40,7 +40,7 @@ public class TrafficLight : MonoBehaviour
 	void OnTriggerExit(Collider other)
 	{
 	    var w = other.GetComponent<Waiter>();
-	    if (w != null)
+	    if (w != null && w.IsWaitCollider(other))
 	    {
 		trafficLight.ExitGroup(grp, w);
 	    }
@@ -51,6 +51,7 @@ public class TrafficLight : MonoBehaviour
     {
 	void Wait();
 	void Unwait();
+	bool IsWaitCollider(Collider c);
     }
     
     public GameObject group1Capture;

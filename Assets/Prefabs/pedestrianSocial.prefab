@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 3781018702650209851}
   - component: {fileID: 4359068165681303736}
   - component: {fileID: 5489197548825319558}
+  - component: {fileID: 3815914017795992522}
   m_Layer: 0
   m_Name: pedestrianSocial
   m_TagString: Untagged
@@ -357,6 +358,21 @@ MonoBehaviour:
   waitMax: 2
   walkMin: 10000
   walkMax: 10000
+  waitCollider: {fileID: 3815914017795992522}
+--- !u!136 &3815914017795992522
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885569887212938412}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1885569887212938856
 GameObject:
   m_ObjectHideFlags: 0
