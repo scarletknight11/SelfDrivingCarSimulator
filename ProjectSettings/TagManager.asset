@@ -9,6 +9,8 @@ TagManager:
   - Side
   - Pedestrian
   - Pedestrians
+  - Car
+  - CarCheckZone
   layers:
   - Default
   - TransparentFX

@@ -11,6 +11,7 @@ public class WanderSocial : MonoBehaviour,
     public float walkMin = 10;
     public float walkMax = 20;
     public Collider waitCollider;
+    public bool jaywalk = false;
 
     private Agent agent;
     private NavMeshAgent nma;
@@ -69,12 +70,14 @@ public class WanderSocial : MonoBehaviour,
 	}
     }
     
-    public void Wait()
+    public bool Wait(bool pedIgnore)
     {
+	if (pedIgnore && jaywalk) return false;
 	//Debug.Log("wait " + name);
 	agent.SetDestination(transform.position);
 	
 	waitingAtLight = true;
+	return true;
     }
 
     public void Unwait()

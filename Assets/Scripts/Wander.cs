@@ -21,7 +21,7 @@ public class Wander : MonoBehaviour, TrafficLight.Waiter, GameObjectSink.Sinkabl
     // Start is called before the first frame update
     void Start()
     {
-    agent = GetComponent<NavMeshAgent>();
+	agent = GetComponent<NavMeshAgent>();
 	animator = GetComponent<Animator>();
     }
 
@@ -63,11 +63,12 @@ public class Wander : MonoBehaviour, TrafficLight.Waiter, GameObjectSink.Sinkabl
 	}
     }
 
-    public void Wait()
+    public bool Wait(bool pedIgnore)
     {
 	//Debug.Log("wait " + name);
 	agent.isStopped = true;
 	waitingAtLight = true;
+	return true;
     }
 
     public void Unwait()

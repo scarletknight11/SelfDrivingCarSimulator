@@ -49,7 +49,7 @@ public class TrafficLight : MonoBehaviour
 
     public interface Waiter
     {
-	void Wait();
+	bool Wait(bool pedIgnore);
 	void Unwait();
 	bool IsWaitCollider(Collider c);
     }
@@ -60,6 +60,7 @@ public class TrafficLight : MonoBehaviour
     public LampController lamp2;
     public float time1;
     public float time2;
+    public bool pedIgnore = true;
 
     private List<Waiter>[] groups = {
 	new List<Waiter>(),
@@ -96,8 +97,7 @@ public class TrafficLight : MonoBehaviour
 	// collision?
 	if (grp == inactiveGroup)
 	{
-	    w.Wait();
-	    groups[grp].Add(w);
+	    if(w.Wait(pedIgnore)) groups[grp].Add(w);
 	}
     }
 
@@ -117,7 +117,6 @@ public class TrafficLight : MonoBehaviour
 	    foreach(var waiter in groups[inactiveGroup])
 	    {
 		waiter.Unwait();
-		
 	    }
 	    groups[inactiveGroup].Clear();
 	    time = inactiveGroup == 0? time1 : time2;
