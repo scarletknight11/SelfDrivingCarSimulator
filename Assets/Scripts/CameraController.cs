@@ -11,8 +11,8 @@ public class CameraController : MonoBehaviour
     {
 	// move camera
 	var rotation = transform.localEulerAngles;
-	//rotation.y += Input.GetAxis("Mouse X") * mouseSpeed;
-	//rotation.x += -Input.GetAxis("Mouse Y") * mouseSpeed;
+	rotation.y += Input.GetAxis("Mouse X") * mouseSpeed;
+	rotation.x += -Input.GetAxis("Mouse Y") * mouseSpeed;
 	transform.localEulerAngles = new Vector3(rotation.x, rotation.y, 0);
     }
 
