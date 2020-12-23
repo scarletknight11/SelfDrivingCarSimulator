@@ -1,3 +1,10 @@
-# SelfDrivingCarSimulator
+# CrosswalkSimulation
+[demo video](https://youtu.be/11USfZurHVs)
+[deploy link](https://mjrb.github.io)
 
-Working on Self driving car simulation projecto for Computer Graphics Class @ Rutgers University (CS 428/528)
+simulation of crosswalk for analyzing traffic and comparing a traffic light vs
+free crosswalk.
+
+created for rutgers introduction to computer animation spring 2020.
+
+
