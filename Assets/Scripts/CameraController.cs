@@ -1,38 +1,27 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour
+{
+    public float mouseSpeed = 3f;
+    public float moveSpeed = 3.0f;
 
- 
-
-    void Start()
-    {
-	 
-    }
-    float inputX, inputZ;
     void Update()
     {
-        inputX = Input.GetAxis("Horizontal");
-        inputZ = Input.GetAxis("Vertical");
-        if (inputX != 0)
-        {
-            rotate();
-        }
-        if (inputZ != 0)
-        {
-            move();
-        }
+	// move camera
+	var rotation = transform.localEulerAngles;
+	//rotation.y += Input.GetAxis("Mouse X") * mouseSpeed;
+	//rotation.x += -Input.GetAxis("Mouse Y") * mouseSpeed;
+	transform.localEulerAngles = new Vector3(rotation.x, rotation.y, 0);
     }
 
-    private void move()
+    void FixedUpdate()
     {
-        transform.position += transform.forward * inputZ * Time.deltaTime;  
-    }
-
-    private void rotate()
-    {
-        transform.Rotate(new Vector3(0f, inputX * Time.deltaTime, 0f));
+        Vector3 horiz = Input.GetAxis("Horizontal") * transform.right;
+	Vector3 vert = Input.GetAxis("Vertical") * transform.forward;
+	Vector3 jump = Input.GetAxis("Jump") * transform.up;
+	transform.position += (horiz + jump + vert) * moveSpeed * Time.deltaTime;
+	
     }
 }
