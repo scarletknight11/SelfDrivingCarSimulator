@@ -6,10 +6,13 @@ using UnityEngine.AI;
 public class WanderPoints : MonoBehaviour
 {
     public static Transform points;
+    public Transform autoPilotPoints;
+    public static Transform autopilotPoints;
     
-    void Start()
+    void Awake()
     {
 	points = transform;
+	autopilotPoints = autoPilotPoints;
     }
     
     public static Vector3 RandomPoint(int goal)
@@ -29,4 +32,10 @@ public class WanderPoints : MonoBehaviour
 	return hit.position;
     }
 
+    public static Vector3 AutopilotPoint(int i)
+    {
+	var t = autopilotPoints.GetChild(i);
+	return t.position;
+    }
+    
 }

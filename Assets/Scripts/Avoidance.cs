@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Avoidance : MonoBehaviour {
 
+    public int autopilotPoint = -1;
     [SerializeField]
     private float movementSpeed = 20.0f;
     [SerializeField]
@@ -30,6 +31,10 @@ public class Avoidance : MonoBehaviour {
     private void Start() {
         mainCamera = Camera.main;
         targetPoint = Vector3.zero;
+	if (autopilotPoint >= 0)
+	{
+	    targetPoint = WanderPoints.AutopilotPoint(autopilotPoint);
+	}
     }
 
     // Update is called once per frame
