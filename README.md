@@ -2,17 +2,7 @@
 [demo video](https://youtu.be/11USfZurHVs)
 [deploy link](https://mjrb.github.io)
 
-simulation of crosswalk for analyzing traffic and comparing a traffic light vs
-free crosswalk.
-
-created for rutgers introduction to computer animation spring 2020.
-
-
-Technical Report - Research Track
-Group 8 - Michael Winters, Nathan Smith, Sanjit Singh
-github repo link
-web deployed link
-Video link
+simulation of crosswalk for analyzing traffic and comparing a traffic light vs free crosswalk.
 
 Description of system:  
 We attempted to model the environment of a city crosswalk with two kinds of agents: cars and pedestrians. This simulation could be used to test different avoidance behaviors for cars and agents, test flow or wait time of agents trying to use the intersection, or even test different placements of entrances and exits to examine effects on traffic flow or business popularity in a city environment.
@@ -41,48 +31,7 @@ When a pedestrian is configured to jaywalk, it tells the traffic light it is ign
 
 We also created a more complicated script that would use a ray cast and take the speed of an oncoming car and use its own velocity to project if the two will collide. The math in the implementation should be close to working, but for the sake of time we wound up using the simpler mechanism.
 
-Data:
-All units = Agents/Second
-Ped spawn rate
-Car spawn rate
-Ped flow
-Ped flow (light)
-Car flow
-Car flow (light)
-0.09
-0.09
-
-
-
-
-
-
-
-
-0.17
-0.17
-
-
-
-
-
-
-
-
-0.22
-0.22
-
-
-
-
-
-
-
-
 Click to move car navigation mostly worked with custom a* code, but wound up having a bug with setting the point programmatically so we unfortunately couldn’t run the simulation properly to collect data
 
 Evaluation/Reflection:
 Even though we wound up not collecting data we still got to explore some very interesting avoidance behavior, and got to work with a more custom a* algorithm for the cars. The pedestrians used built in nav mesh. The project was very close to being able to collect data but unfortunately we weren’t focused on collecting this data until the day before it was due, which was poor planning on our part. It drifted a bit from what we initially proposed, but i hope some of this behavior we modeled is at least interesting to see/think about
-
-
-
