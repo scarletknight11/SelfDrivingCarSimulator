@@ -1,4 +1,7 @@
 # CrosswalkSimulation
+
+Created this Project for Computer Graphics Course (CS428/CS528) @ Rutgers University 
+
 [demo video](https://youtu.be/11USfZurHVs)
 [deploy link](https://mjrb.github.io)
 
